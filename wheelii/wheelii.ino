@@ -1,3 +1,13 @@
+/* ROBOT WHEELII (by The Roboteur)
+ *   
+ * Website: www.roboteur.me
+ * Facebook: facebook.com/TheRoboteur
+ * Instagram: instagram.com/the_roboteur
+ * YouTube: bitly.com/RoboteurTV  
+ * GitHub: github.com/roboteur
+ *  
+ */
+
 #include <ESP8266WiFi.h>
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
@@ -20,21 +30,16 @@ uint16_t time_elapsed = 0;
 int blinkSpeed = 1000;
 int state_current = 0;
 
-/**** DEFINE NEW  ****/
 const int IN1 = D5;
 const int IN2 = D6;
 const int IN3 = D7;
 const int IN4 = D8;
 
-const int ENA = D1;      // D1
+const int ENA = D1;      
 const int ENB = D3;
 
-
-/*******************/ 
-
-/**** SETUP ********/
 void setup() {
-  pinMode(2, OUTPUT);   // DEFAULT PIN/LED                                                       
+  pinMode(2, OUTPUT);                                                    
   Serial.begin(115200); 
   Serial.println("Starting ...");
   WiFi.mode(WIFI_STA);
@@ -101,78 +106,28 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
-
-/**************************** ROUTE ************************************/
-/*** DO NOT DELETE ***/
-
-  // SET THE ROUTE IP/ota thru ESP.restart() function
-  // BYPASSES THE LOOP
   server.on("/ota", [](){
     server.send(200, "text/plain", "Upload the firmware.");
     delay(1000);
     ESP.restart();    
   });
-
-  server.on("/", [](){
-    server.send(200, "text/plain", "1] ip/b 2] ip/f 3] ip/r 4] ip/l");
-    delay(1000);
-  });
-
+ 
   server.on("/reset", [](){
     server.send(200, "text/plain", "Resetting...");
     delay(1000);
     ESP.restart();    
   });
 
-  server.on("/b", [](){
-    server.send(200, "text/plain", "Backward");
-    delay(1000);
-    state_current = 1;
-  });
-
-  server.on("/f", [](){
-    server.send(200, "text/plain", "Forward");
-    delay(1000);
-    state_current = 2;
-  });
-
-  server.on("/s", [](){
-    server.send(200, "text/plain", "Stop");
-    delay(1000);
-    state_current = 0;
-  }); 
-
-  server.on("/l", [](){
-    server.send(200, "text/plain", "Left");
-    delay(1000);
-    state_current = 3;
-  });
+  server.on("/", handle_OnConnect);
+  server.on("/forward", handle_Forward);
+  server.on("/backward", handle_Backward);
+  server.on("/right", handle_Right);
+  server.on("/left", handle_Left);
+  server.on("/mid", handle_Mid);  
   
-  server.on("/r", [](){
-    server.send(200, "text/plain", "Right");
-    delay(1000);
-    state_current = 4;
-  });
-
-  server.on("/stop", [](){
-    server.send(200, "text/plain", "Stop");
-    delay(1000);
-    state_current = 0;
-  });
-  
-  server.begin();
-
-/**** SETUP NEW  ****/
-
-
-
-/*******************/ 
-  
+  server.begin();  
   
 }
-
-/***************************** BLINK ************************************/
-/*** DO NOT DELETE ***/
 
 void loop() {
   
@@ -190,36 +145,19 @@ void loop() {
 
   server.handleClient();
 
-
-/********************** START YOUR CODE HERE  ****************************/
   digitalWrite(LED_BUILTIN, HIGH);
   state_machine();
 
-
-/************************************************************************/  
 }
 
 void state_machine() {
-  analogWrite(ENA, 230); // lowest was 230
-  analogWrite(ENB, 230); 
+  analogWrite(ENA, 375); 
+  analogWrite(ENB, 300); 
     
     // state_previous = state_current;
     
   switch (state_current) {       
-      /* case 1: // On BUILTIN LED
-           digitalWrite(LED_BUILTIN, HIGH);
-           Serial.print("You are at case 49.");
-           Serial.println(state_current);
-           delay(1000);           
-           break;
-    
-      case 2: // Off BUILTIN LED
-           digitalWrite(LED_BUILTIN, LOW);
-           Serial.print("You are at case 50.");
-           Serial.println(state_current);
-           delay(1000);
-           break;
-      */
+      
       case 0: // Stop
            digitalWrite(IN1, LOW);
            digitalWrite(IN2, LOW);
@@ -256,3 +194,166 @@ void state_machine() {
            break;      
   }  
 }
+
+void handle_OnConnect() {
+  server.send(200, "text/html", SendHTML()); 
+    state_current = 6;
+  
+  }
+
+void handle_Forward()  {
+  state_current = 2;
+  server.send(200, "text/html", ForwardHTML());
+  
+  }
+
+void handle_Backward()  {
+  state_current = 1;
+  server.send(200, "text/html", BackwardHTML());
+  
+  }
+
+void handle_Right()  {
+  state_current = 3;
+  server.send(200, "text/html", RightHTML());
+  
+  }
+
+void handle_Left()  {
+  state_current = 4;
+  server.send(200, "text/html", LeftHTML());
+  
+  }
+  
+void handle_Mid()  {
+  state_current = 0;
+  server.send(200, "text/html", MidHTML());
+  
+  }
+
+
+String SendHTML(){
+  String ptr = "<!DOCTYPE html> <html>\n";
+  ptr +="<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n";
+  ptr +="<title>WHEELII</title>\n";
+  ptr +="<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}\n";
+  ptr +="body{margin-top: 50px;} h1 {color: #444444;margin: 50px auto 30px;}\n";
+  ptr +="p {font-size: 12px;color: #444444;margin-bottom: 10px;}\n";
+  ptr +="</style>\n";
+  ptr +="</head>\n";
+  ptr +="<body>\n";
+  ptr +="<div id=\"webpage\">\n";
+  ptr +="<h1>WHEELII</h1>\n";
+  ptr +="<p><a href=\"/forward\"><button>F</button></a></p>";
+  ptr +="<p><a href=\"/left\"><button>L</button></a>&nbsp;&nbsp;&nbsp;<a href=\"/mid\"><button>-</button></a>&nbsp;&nbsp;&nbsp;<a href=\"/right\"><button>R</button></a></p>";
+  ptr +="<p><a href=\"/backward\"><button>B</button></a></p>";
+  ptr +="</div>\n";
+  ptr +="</body>\n";
+  ptr +="</html>\n";
+  return ptr;
+  }
+
+String LeftHTML(){
+  String ptr = "<!DOCTYPE html> <html>\n";
+  ptr +="<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n";
+  ptr +="<title>WHEELII</title>\n";
+  ptr +="<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}\n";
+  ptr +="body{margin-top: 50px;} h1 {color: #444444;margin: 50px auto 30px;}\n";
+  ptr +="p {font-size: 12px;color: #444444;margin-bottom: 10px;}\n";
+  ptr +="</style>\n";
+  ptr +="</head>\n";
+  ptr +="<body>\n";
+  ptr +="<div id=\"webpage\">\n";
+  ptr +="<h1>WHEELII</h1>\n";
+  ptr +="<p><a href=\"/forward\"><button>F</button></a></p>";
+  ptr +="<p><a href=\"/left\"><button>L</button></a>&nbsp;&nbsp;&nbsp;<a href=\"/mid\"><button>-</button></a>&nbsp;&nbsp;&nbsp;<a href=\"/right\"><button>R</button></a></p>";
+  ptr +="<p><a href=\"/backward\"><button>B</button></a></p>";
+  ptr +="</div>\n";
+  ptr +="</body>\n";
+  ptr +="</html>\n";
+  return ptr;
+  }
+
+String RightHTML(){
+  String ptr = "<!DOCTYPE html> <html>\n";
+  ptr +="<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n";
+  ptr +="<title>WHEELII</title>\n";
+  ptr +="<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}\n";
+  ptr +="body{margin-top: 50px;} h1 {color: #444444;margin: 50px auto 30px;}\n";
+  ptr +="p {font-size: 12px;color: #444444;margin-bottom: 10px;}\n";
+  ptr +="</style>\n";
+  ptr +="</head>\n";
+  ptr +="<body>\n";
+  ptr +="<div id=\"webpage\">\n";
+  ptr +="<h1>WHEELII</h1>\n";
+  ptr +="<p><a href=\"/forward\"><button>F</button></a></p>";
+  ptr +="<p><a href=\"/left\"><button>L</button></a>&nbsp;&nbsp;&nbsp;<a href=\"/mid\"><button>-</button></a>&nbsp;&nbsp;&nbsp;<a href=\"/right\"><button>R</button></a></p>";
+  ptr +="<p><a href=\"/backward\"><button>B</button></a></p>";
+  ptr +="</div>\n";
+  ptr +="</body>\n";
+  ptr +="</html>\n";
+  return ptr;
+  }
+
+String ForwardHTML(){
+  String ptr = "<!DOCTYPE html> <html>\n";
+  ptr +="<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n";
+  ptr +="<title>WHEELII</title>\n";
+  ptr +="<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}\n";
+  ptr +="body{margin-top: 50px;} h1 {color: #444444;margin: 50px auto 30px;}\n";
+  ptr +="p {font-size: 12px;color: #444444;margin-bottom: 10px;}\n";
+  ptr +="</style>\n";
+  ptr +="</head>\n";
+  ptr +="<body>\n";
+  ptr +="<div id=\"webpage\">\n";
+  ptr +="<h1>WHEELII</h1>\n";
+  ptr +="<p><a href=\"/forward\"><button>F</button></a></p>";
+  ptr +="<p><a href=\"/left\"><button>L</button></a>&nbsp;&nbsp;&nbsp;<a href=\"/mid\"><button>-</button></a>&nbsp;&nbsp;&nbsp;<a href=\"/right\"><button>R</button></a></p>";
+  ptr +="<p><a href=\"/backward\"><button>B</button></a></p>";
+  ptr +="</div>\n";
+  ptr +="</body>\n";
+  ptr +="</html>\n";
+  return ptr;
+  }
+
+String BackwardHTML(){
+  String ptr = "<!DOCTYPE html> <html>\n";
+  ptr +="<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n";
+  ptr +="<title>WHEELII</title>\n";
+  ptr +="<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}\n";
+  ptr +="body{margin-top: 50px;} h1 {color: #444444;margin: 50px auto 30px;}\n";
+  ptr +="p {font-size: 12px;color: #444444;margin-bottom: 10px;}\n";
+  ptr +="</style>\n";
+  ptr +="</head>\n";
+  ptr +="<body>\n";
+  ptr +="<div id=\"webpage\">\n";
+  ptr +="<h1>WHEELII</h1>\n";
+  ptr +="<p><a href=\"/forward\"><button>F</button></a></p>";
+  ptr +="<p><a href=\"/left\"><button>L</button></a>&nbsp;&nbsp;&nbsp;<a href=\"/mid\"><button>-</button></a>&nbsp;&nbsp;&nbsp;<a href=\"/right\"><button>R</button></a></p>";
+  ptr +="<p><a href=\"/backward\"><button>B</button></a></p>";
+  ptr +="</div>\n";
+  ptr +="</body>\n";
+  ptr +="</html>\n";
+  return ptr;
+  }
+
+String MidHTML(){
+  String ptr = "<!DOCTYPE html> <html>\n";
+  ptr +="<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\">\n";
+  ptr +="<title>WHEELII</title>\n";
+  ptr +="<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}\n";
+  ptr +="body{margin-top: 50px;} h1 {color: #444444;margin: 50px auto 30px;}\n";
+  ptr +="p {font-size: 12px;color: #444444;margin-bottom: 10px;}\n";
+  ptr +="</style>\n";
+  ptr +="</head>\n";
+  ptr +="<body>\n";
+  ptr +="<div id=\"webpage\">\n";
+  ptr +="<h1>WHEELII</h1>\n";
+  ptr +="<p><a href=\"/forward\"><button>F</button></a></p>";
+  ptr +="<p><a href=\"/left\"><button>L</button></a>&nbsp;&nbsp;&nbsp;<a href=\"/mid\"><button>-</button></a>&nbsp;&nbsp;&nbsp;<a href=\"/right\"><button>R</button></a></p>";
+  ptr +="<p><a href=\"/backward\"><button>B</button></a></p>";
+  ptr +="</div>\n";
+  ptr +="</body>\n";
+  ptr +="</html>\n";
+  return ptr;
+  }
