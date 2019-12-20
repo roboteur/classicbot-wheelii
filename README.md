@@ -1,7 +1,7 @@
 # Robot Wheelii
 
 ## Additional Notes
-* ENA = 375, ENB = 300 | These differences varies. It depends on your own calibration.
+* ENA and ENB refers to the speed of each motors.
 
 ## Feel Free To Direct Message
 * Facebook: https://facebook.com/TheRoboteur

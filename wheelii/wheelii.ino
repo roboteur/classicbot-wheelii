@@ -151,8 +151,8 @@ void loop() {
 }
 
 void state_machine() {
-  analogWrite(ENA, 375); 
-  analogWrite(ENB, 300); 
+  analogWrite(ENA, 315); 
+  analogWrite(ENB, 325); 
     
     // state_previous = state_current;
     
