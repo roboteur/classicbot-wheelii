@@ -27,14 +27,14 @@
 2. Ultrasonic Sensor x 1  = $2.00 approx.
 3. Two DC Motors and Chassis Set = $6.00 approx.
 4. 18650 Battery Holder x 4 slots = $2.00 approx.
-6. Solid Wires #22 x 3ft. = $1.00 approx.
-7. Jumper Wires male/female x 6 = $1.00 approx. 
-8. USB Cable x 1 = $2.00
-9. Half-sized breadboard x 1 = $2.00 
-10. Long-legged Headers x 3 = $2.00
-11. Breadboard Powersupply x 1 = $2.00
-12. L298N Motor Controller x 1 = $3.00
-13. Photo Sensor / LDR X 1 = $1.00
+5. Solid Wires #22 x 3ft. = $1.00 approx.
+6. Jumper Wires male/female x 6 = $1.00 approx. 
+7. USB Cable x 1 = $2.00
+8. Half-sized breadboard x 1 = $2.00 
+9. Long-legged Headers x 3 = $2.00
+10. Breadboard Powersupply x 1 = $2.00
+11. L298N Motor Controller x 1 = $3.00
+12. Photo Sensor / LDR X 1 = $1.00
 
 ## Robot Construction
 ![Robot Construction](./img/roboteur-wheelii-construction.png)
