@@ -1,6 +1,6 @@
 # Robot Wheelii
 * An easy to build wheeled robot framework.
-* Not permanently fastened, hence the hardware components are reusable.
+* Sturdy build yet not permanently fastened. Hence, the hardware components are reusable.
 
 ## Features
 * Smartphone Controlled
@@ -33,13 +33,15 @@
 9. Half-sized breadboard x 1 = $2.00 
 10. Long-legged Headers x 3 = $2.00
 11. Breadboard Powersupply x 1 = $2.00
+12. L298N Motor Controller x 1 = $3.00
+13. Photo Sensor / LDR X 1 = $1.00
 
 ## Robot Construction
 ![Robot Construction](./img/roboteur-wheelii-construction.png)
 
 ## Wiring Connection
-![Wiring Connection](./img/roboteur-wheelii-wiring.png)
-* There's a DWG file as well. You can check the folders. 
+* Photos >> https://github.com/roboteur/robot-wheelii/tree/master/img
+* DWG File >> https://github.com/roboteur/robot-wheelii/tree/master/dwg
 
 ## Demo Video
 * Here's the link >> https://youtu.be/QHAiQ2GTEBQ
