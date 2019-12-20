@@ -17,8 +17,8 @@
 /***************************************************************/
 
 
-const char* ssid = "ZTEH108N_3C01E";          // Wifi User Name
-const char* password = "X9425TE9";            // Wifi Password
+const char* ssid = "ANYUSERID";          // Wifi User Name
+const char* password = "ANYPASSWORD";    // Wifi Password
 
 
 /********************** OTA CODES ******************************/
