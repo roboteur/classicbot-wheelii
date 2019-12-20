@@ -25,8 +25,8 @@ const char* password = "X9425TE9";            // Wifi Password
 
 ESP8266WebServer server;
 
-bool ota_flag = true;
-uint16_t time_elapsed = 0;
+bool ota_time_trigger = true;
+uint16_t ota_time_consumed = 0;
 int blinkSpeed = 1000;
 int state_current = 0;
 
@@ -132,15 +132,15 @@ void setup() {
 void loop() {
   
   // OTA FLAG WORKS ONLY AT ROUTE IP/ota
-  if(ota_flag)
+  if(ota_time_trigger)
   {
-    while(time_elapsed < 25000)
+    while(ota_time_consumed < 25000)
     {
       ArduinoOTA.handle();
-      time_elapsed = millis();
+      ota_time_consumed = millis();
       delay(10);
     }
-    ota_flag = false;
+    ota_time_trigger = false;
   }
 
   server.handleClient();
@@ -197,9 +197,10 @@ void state_machine() {
 
 void handle_OnConnect() {
   server.send(200, "text/html", SendHTML()); 
-    state_current = 6;
+    // state_current = 6;
   
   }
+
 
 void handle_Forward()  {
   state_current = 2;
