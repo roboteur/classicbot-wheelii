@@ -29,12 +29,12 @@
 4. 18650 Battery Holder x 4 slots = $2.00 approx.
 5. Solid Wires #22 x 3ft. = $1.00 approx.
 6. Jumper Wires male/female x 6 = $1.00 approx. 
-7. USB Cable x 1 = $2.00
-8. Half-sized breadboard x 1 = $2.00 
-9. Long-legged Headers x 3 = $2.00
-10. Breadboard Powersupply x 1 = $2.00
-11. L298N Motor Controller x 1 = $3.00
-12. Photo Sensor / LDR X 1 = $1.00
+7. USB Cable x 1 = $2.00 approx.
+8. Half-sized breadboard x 1 = $2.00 approx.
+9. Long-legged Headers x 3 = $2.00 approx.
+10. Breadboard Powersupply x 1 = $2.00 approx.
+11. L298N Motor Controller x 1 = $3.00 approx.
+12. Photo Sensor / LDR X 1 = $1.00 approx.
 
 ## Robot Construction
 ![Robot Construction](./img/roboteur-wheelii-construction.png)
