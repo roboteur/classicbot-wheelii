@@ -47,7 +47,7 @@
 * Here's the link >> https://youtu.be/QHAiQ2GTEBQ
 
 ## Additional Notes
-* ENA and ENB refers to the speed of each motors.
+* ENA and ENB refers to the speed of each motor.
 
 ## Feel Free To Direct Message
 * Facebook: https://facebook.com/TheRoboteur
