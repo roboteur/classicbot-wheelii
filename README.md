@@ -43,6 +43,9 @@
 * Photos >> https://github.com/roboteur/robot-wheelii/tree/master/img
 * DWG File >> https://github.com/roboteur/robot-wheelii/tree/master/dwg
 
+## IDE
+ * Arduino IDE Version 1.8.9
+
 ## Demo Video
 * Here's the link >> https://youtu.be/QHAiQ2GTEBQ
 
